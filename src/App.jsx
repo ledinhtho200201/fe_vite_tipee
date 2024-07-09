@@ -4,7 +4,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import ErrorPage from './error-page';
 import LoginPage from './pages/login';
 import ContactPage from './pages/contact';
 import BookPage from './pages/book';
@@ -15,7 +14,11 @@ import Home from './components/Home';
 import RegisterPage from './pages/register';
 import { callFetchAccount } from './services/api';
 import { doGetAccountAction } from './redux/account/accountSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from './components/Loading';
+import NotFound from './components/NotFound';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import AdminPage from './pages/admin/index.jsx';
 
 const Layout = () => {
   return (
@@ -29,8 +32,10 @@ const Layout = () => {
 
 export default function App() {
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.account.isAuthenticated)
 
   const getAccount = async () => {
+    if (window.location.pathname === '/login' || window.location.pathname === '/register') return;
     const res = await callFetchAccount();
     if (res && res.data) {
       dispatch(doGetAccountAction(res.data))
@@ -46,11 +51,32 @@ export default function App() {
     {
       path: "/",
       element: <Layout />,
-      errorElement: <ErrorPage />,
+      errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
         {
           path: "contact",
+          element: <ContactPage />,
+        },
+        {
+          path: "book",
+          element: <BookPage />,
+        },
+      ],
+    },
+    {
+      path: "admin",
+      element: <Layout />,
+      errorElement: <NotFound />,
+      children: [
+        {
+          index: true, element:
+            <ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>
+        },
+        {
+          path: "user",
           element: <ContactPage />,
         },
         {
@@ -71,7 +97,17 @@ export default function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      {/* <RouterProvider router={router} /> */}
+      {isAuthenticated === true
+        || window.location.pathname === '/'
+        || window.location.pathname === '/login'
+        || window.location.pathname === '/register'
+        ?
+        <RouterProvider router={router} />
+        :
+        <Loading />
+      }
+
     </>
   );
 }
