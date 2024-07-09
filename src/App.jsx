@@ -30,6 +30,20 @@ const Layout = () => {
   )
 }
 
+const LayoutAdmin = () => {
+  const isAdminRoute = window.location.pathname.startsWith('/admin');
+  const user = useSelector(state => state.account.user);
+  const userRole = user.role;
+
+  return (
+    <div className='layout-app'>
+      {isAdminRoute && userRole === 'ADMIN' && <Header />}
+      <Outlet />
+      {isAdminRoute && userRole === 'ADMIN' && <Footer />}
+    </div>
+  )
+}
+
 export default function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(state => state.account.isAuthenticated)
@@ -38,7 +52,7 @@ export default function App() {
     if (window.location.pathname === '/login' || window.location.pathname === '/register') return;
     const res = await callFetchAccount();
     if (res && res.data) {
-      dispatch(doGetAccountAction(res.data))
+      dispatch(doGetAccountAction(res.data.user))
     }
   }
 
@@ -66,7 +80,7 @@ export default function App() {
     },
     {
       path: "admin",
-      element: <Layout />,
+      element: <LayoutAdmin />,
       errorElement: <NotFound />,
       children: [
         {
