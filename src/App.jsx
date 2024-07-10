@@ -49,6 +49,7 @@ const Layout = () => {
 export default function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(state => state.account.isAuthenticated)
+  const isLoading = useSelector(state => state.account.isLoading)
 
   const getAccount = async () => {
     if (window.location.pathname === '/login' || window.location.pathname === '/register') return;
@@ -114,7 +115,7 @@ export default function App() {
   return (
     <>
       {/* <RouterProvider router={router} /> */}
-      {isAuthenticated === true
+      {isLoading === false
         || window.location.pathname === '/'
         || window.location.pathname === '/login'
         || window.location.pathname === '/register'
