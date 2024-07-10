@@ -19,6 +19,8 @@ import Loading from './components/Loading';
 import NotFound from './components/NotFound';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminPage from './pages/admin/index.jsx';
+import LayoutAdmin from './components/Admin/LayoutAdmin.jsx';
+import './styles/reset.scss';
 
 const Layout = () => {
   return (
@@ -30,19 +32,19 @@ const Layout = () => {
   )
 }
 
-const LayoutAdmin = () => {
-  const isAdminRoute = window.location.pathname.startsWith('/admin');
-  const user = useSelector(state => state.account.user);
-  const userRole = user.role;
+// const LayoutAdmin = () => {
+//   const isAdminRoute = window.location.pathname.startsWith('/admin');
+//   const user = useSelector(state => state.account.user);
+//   const userRole = user.role;
 
-  return (
-    <div className='layout-app'>
-      {isAdminRoute && userRole === 'ADMIN' && <Header />}
-      <Outlet />
-      {isAdminRoute && userRole === 'ADMIN' && <Footer />}
-    </div>
-  )
-}
+//   return (
+//     <div className='layout-app'>
+//       {isAdminRoute && userRole === 'ADMIN' && <Header />}
+//       <Outlet />
+//       {isAdminRoute && userRole === 'ADMIN' && <Footer />}
+//     </div>
+//   )
+// }
 
 export default function App() {
   const dispatch = useDispatch();
