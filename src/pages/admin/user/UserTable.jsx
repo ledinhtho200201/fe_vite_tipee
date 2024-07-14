@@ -1,8 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Row, Col, Pagination, message, Popconfirm } from 'antd';
+import { Table, Row, Col, Pagination, message, Popconfirm, Button } from 'antd';
 import InputSearch from './InputSearch';
 import { callDeleteUser, callFetchListUser } from '../../../services/api';
-import { DeleteTwoTone } from '@ant-design/icons';
+import { CloudUploadOutlined, DeleteTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons';
+
+const renderHeader = () => {
+    return (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>Table List Users</span>
+            <span style={{ display: 'flex', gap: 15 }}>
+                <Button
+                    icon={<ExportOutlined />}
+                    type="primary"
+                >Export</Button>
+
+                <Button
+                    icon={<CloudUploadOutlined />}
+                    type="primary"
+                >Import</Button>
+
+                <Button
+                    icon={<PlusOutlined />}
+                    type="primary"
+                >Thêm mới</Button>
+                <Button type='ghost'>
+                    <ReloadOutlined />
+                </Button>
+            </span>
+        </div>
+    )
+}
+
 
 const UserTable = () => {
     const [listUser, setListUser] = useState([]);
@@ -100,7 +128,7 @@ const UserTable = () => {
                 </Col>
                 <Col span={24}>
                     <Table
-                        className='def'
+                        title={renderHeader}
                         columns={columns}
                         dataSource={listUser}
                         onChange={onChange}
