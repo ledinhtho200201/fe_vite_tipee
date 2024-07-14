@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Row, Col, Pagination } from 'antd';
+import { Table, Row, Col, Pagination, message, Popconfirm } from 'antd';
 import InputSearch from './InputSearch';
-import { callFetchListUser } from '../../../services/api';
+import { callDeleteUser, callFetchListUser } from '../../../services/api';
+import { DeleteTwoTone } from '@ant-design/icons';
 
 const UserTable = () => {
     const [listUser, setListUser] = useState([]);
@@ -47,7 +48,18 @@ const UserTable = () => {
             title: 'Action',
             render: (text, record, index) => {
                 return (
-                    <><button>Delete</button></>
+                    <Popconfirm
+                        placement="leftTop"
+                        title={"Xác nhận xóa user"}
+                        description={"Bạn có chắc chắn muốn xóa user này ?"}
+                        onConfirm={() => handleDeleteUser(record._id)}
+                        okText="Xác nhận"
+                        cancelText="Hủy"
+                    >
+                        <span style={{ cursor: "pointer" }}>
+                            <DeleteTwoTone twoToneColor="#ff4d4f" />
+                        </span>
+                    </Popconfirm>
                 )
             }
 
@@ -65,6 +77,20 @@ const UserTable = () => {
 
         console.log('params', pagination, filters, sorter, extra);
     };
+
+    const handleDeleteUser = async (userId) => {
+        const res = await callDeleteUser(userId);
+        if (res && res.data) {
+            message.success('Xóa user thành công');
+            fetchUser();
+        } else {
+            notification.error({
+                message: 'Có lỗi xảy ra',
+                description: res.message
+            });
+        }
+    };
+
 
     return (
         <>
