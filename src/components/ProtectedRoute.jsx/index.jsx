@@ -17,7 +17,6 @@ const RoleBaseRoute = (props) => {
 
 const ProtectedRoute = (props) => {
     const isAuthenticated = useSelector(state => state.account.isAuthenticated)
-    console.log('vao day', isAuthenticated)
 
     return (
         <>

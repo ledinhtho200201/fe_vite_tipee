@@ -21,6 +21,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminPage from './pages/admin/index.jsx';
 import LayoutAdmin from './components/Admin/LayoutAdmin.jsx';
 import './styles/reset.scss';
+import ManageUserPage from './pages/admin/user/index.jsx';
 
 const Layout = () => {
   return (
@@ -94,7 +95,10 @@ export default function App() {
         },
         {
           path: "user",
-          element: <ContactPage />,
+          element:
+            <ProtectedRoute>
+              <ManageUserPage />
+            </ProtectedRoute>,
         },
         {
           path: "book",
