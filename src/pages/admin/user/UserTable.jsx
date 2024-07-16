@@ -4,32 +4,7 @@ import InputSearch from './InputSearch';
 import { callDeleteUser, callFetchListUser } from '../../../services/api';
 import { CloudUploadOutlined, DeleteTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 
-const renderHeader = () => {
-    return (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Table List Users</span>
-            <span style={{ display: 'flex', gap: 15 }}>
-                <Button
-                    icon={<ExportOutlined />}
-                    type="primary"
-                >Export</Button>
 
-                <Button
-                    icon={<CloudUploadOutlined />}
-                    type="primary"
-                >Import</Button>
-
-                <Button
-                    icon={<PlusOutlined />}
-                    type="primary"
-                >Thêm mới</Button>
-                <Button type='ghost' onClick={() => fetchUser()}>
-                    <ReloadOutlined />
-                </Button>
-            </span>
-        </div>
-    )
-}
 
 
 const UserTable = () => {
@@ -38,16 +13,24 @@ const UserTable = () => {
     const [pageSize, setPageSize] = useState(5);
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [filter, setFilter] = useState("");
+    const [sortQuery, setSortQuery] = useState("");
+
 
     useEffect(() => {
         fetchUser();
-    }, [current, pageSize]);
+    }, [current, pageSize, filter, sortQuery]);
 
-    const fetchUser = async (searchFilter) => {
+    const fetchUser = async () => {
         setIsLoading(true)
         let query = `current=${current}&pageSize=${pageSize}`;
-        if (searchFilter) {
-            query += `&${searchFilter}`
+
+        if (filter) {
+            query += `&${filter}`;
+        }
+
+        if (sortQuery) {
+            query += `&${sortQuery}`;
         }
 
         const res = await callFetchListUser(query);
@@ -59,7 +42,7 @@ const UserTable = () => {
     }
 
     const handleSearch = (query) => {
-        fetchUser(query)
+        setFilter(query)
     }
 
     const columns = [
@@ -113,8 +96,12 @@ const UserTable = () => {
             setPageSize(pagination.pageSize)
             setCurrent(1);
         }
-
         console.log('params', pagination, filters, sorter, extra);
+        if (sorter && sorter.field) {
+            const q = sorter.order === 'ascend' ? `sort=${sorter.field}` : `sort=-${sorter.field}`;
+            setSortQuery(q);
+        }
+
     };
 
     const handleDeleteUser = async (userId) => {
@@ -130,12 +117,46 @@ const UserTable = () => {
         }
     };
 
+    const renderHeader = () => {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span>Table List Users</span>
+                <span style={{ display: 'flex', gap: 15 }}>
+                    <Button
+                        icon={<ExportOutlined />}
+                        type="primary"
+                    >Export</Button>
+
+                    <Button
+                        icon={<CloudUploadOutlined />}
+                        type="primary"
+                    >Import</Button>
+
+                    <Button
+                        icon={<PlusOutlined />}
+                        type="primary"
+                    >Thêm mới</Button>
+                    <Button type='ghost' onClick={() => {
+                        setFilter("");
+                        setSortQuery("")
+                    }
+                    }
+                    >
+                        <ReloadOutlined />
+                    </Button>
+                </span>
+            </div>
+        )
+    }
 
     return (
         <>
             <Row gutter={[20, 20]}>
                 <Col span={24}>
-                    <InputSearch handleSearch={handleSearch} />
+                    <InputSearch
+                        handleSearch={handleSearch}
+                        setFilter={setFilter}
+                    />
                 </Col>
                 <Col span={24}>
                     <Table
