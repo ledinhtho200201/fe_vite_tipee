@@ -186,7 +186,8 @@ const UserTable = () => {
                                 current: current,
                                 pageSize: pageSize,
                                 showSizeChanger: true,
-                                total: total
+                                total: total,
+                                showTotal: (total, range) => { return (<div>{range[0]}-{range[1]} trên {total} rows</div>) }
                             }
                         }
 

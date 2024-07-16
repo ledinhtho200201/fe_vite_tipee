@@ -10,7 +10,7 @@ import {
     MenuUnfoldOutlined,
     DownOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Dropdown, Space } from 'antd';
+import { Layout, Menu, Dropdown, Space, Avatar } from 'antd';
 import { Outlet, useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import './layout.scss';
@@ -61,6 +61,7 @@ const LayoutAdmin = () => {
     const user = useSelector(state => state.account.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`;
 
     const handleLogout = async () => {
         const res = await callLogout();
@@ -75,6 +76,10 @@ const LayoutAdmin = () => {
         {
             label: <label style={{ cursor: 'pointer' }}>Quản lý tài khoản</label>,
             key: 'account',
+        },
+        {
+            label: <Link to={'/'}>Trang chủ</Link>,
+            key: 'home',
         },
         {
             label: <label style={{ cursor: 'pointer' }}
@@ -114,12 +119,11 @@ const LayoutAdmin = () => {
                         })}
                     </span>
                     <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
-                        <a onClick={(e) => e.preventDefault()}>
-                            <Space>
-                                Welcome {user?.fullName}
-                                <DownOutlined />
-                            </Space>
-                        </a>
+                        <Space>
+                            <Avatar src={urlAvatar} />
+                            {user?.fullName}
+                            <DownOutlined />
+                        </Space>
                     </Dropdown>
                 </div>
                 <Content style={{ padding: '15px' }}>
