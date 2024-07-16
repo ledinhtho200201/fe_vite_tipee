@@ -5,6 +5,8 @@ import { callDeleteUser, callFetchListUser } from '../../../services/api';
 import { CloudUploadOutlined, DeleteTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import UserViewDetail from '../../../components/Admin/User/UserViewDetail';
 import UserModalCreate from '../../../components/Admin/User/UserModalCreate';
+import { FORMAT_DATE_DISPLAY } from '../../../utils/constant';
+import moment from 'moment';
 
 
 
@@ -80,6 +82,18 @@ const UserTable = () => {
             dataIndex: 'phone',
             sorter: true
         },
+        {
+            title: 'Ngày cập nhật',
+            dataIndex: 'updatedAt',
+            sorter: true,
+            render: (text, record, index) => {
+                return (
+                    <>{moment(record.updatedAt).format(FORMAT_DATE_DISPLAY)}</>
+                )
+            }
+
+        },
+
         {
             title: 'Action',
             render: (text, record, index) => {
@@ -197,6 +211,7 @@ const UserTable = () => {
             <UserModalCreate
                 openModalCreate={openModalCreate}
                 setOpenModalCreate={setOpenModalCreate}
+                fetchUser={fetchUser}
             />
 
             <UserViewDetail

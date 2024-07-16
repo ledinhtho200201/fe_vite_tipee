@@ -24,3 +24,7 @@ export const callFetchListUser = (query) => {
 export const callDeleteUser = (id) => {
     return axios.delete(`/api/v1/user/${id}`)
 }
+
+export const callCreateAUser = (fullName, password, email, phone) => {
+    return axios.post('/api/v1/user', { fullName, password, email, phone })
+}
