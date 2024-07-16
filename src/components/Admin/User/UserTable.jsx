@@ -3,11 +3,11 @@ import { Table, Row, Col, Pagination, message, Popconfirm, Button } from 'antd';
 import InputSearch from './InputSearch';
 import { callDeleteUser, callFetchListUser } from '../../../services/api';
 import { CloudUploadOutlined, DeleteTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons';
-import UserViewDetail from '../../../components/Admin/User/UserViewDetail';
-import UserModalCreate from '../../../components/Admin/User/UserModalCreate';
+import UserViewDetail from './UserViewDetail';
+import UserModalCreate from './UserModalCreate';
 import { FORMAT_DATE_DISPLAY } from '../../../utils/constant';
 import moment from 'moment';
-import UserImport from '../../../components/Admin/User/Data/UserImport';
+import UserImport from './Data/UserImport';
 
 
 
