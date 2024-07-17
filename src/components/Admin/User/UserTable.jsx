@@ -8,7 +8,7 @@ import UserModalCreate from './UserModalCreate';
 import { FORMAT_DATE_DISPLAY } from '../../../utils/constant';
 import moment from 'moment';
 import UserImport from './Data/UserImport';
-
+import * as XLSX from 'xlsx';
 
 
 
@@ -154,6 +154,7 @@ const UserTable = () => {
                     <Button
                         icon={<ExportOutlined />}
                         type="primary"
+                        onClick={() => handleExportData()}
                     >Export</Button>
 
                     <Button
@@ -179,6 +180,13 @@ const UserTable = () => {
             </div>
         )
     }
+
+    const handleExportData = () => {
+        const worksheet = XLSX.utils.json_to_sheet(listUser);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+        XLSX.writeFile(workbook, "ExportUser.csv");
+    };
 
     return (
         <>
