@@ -22,6 +22,7 @@ import AdminPage from './pages/admin/index.jsx';
 import LayoutAdmin from './components/Admin/LayoutAdmin.jsx';
 import './styles/reset.scss';
 import ManageUserPage from './pages/admin/user/index.jsx';
+import ManageBookPage from './pages/admin/book/index.jsx';
 
 const Layout = () => {
   return (
@@ -102,7 +103,7 @@ export default function App() {
         },
         {
           path: "book",
-          element: <BookPage />,
+          element: <ManageBookPage />,
         },
       ],
     },

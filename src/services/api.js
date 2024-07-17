@@ -37,3 +37,7 @@ export const callUpdateUser = (_id, fullName, phone) => {
     return axios.put('/api/v1/user', { _id, fullName, phone })
 }
 
+export const callFetchListBook = (query) => {
+    // current=1&pageSize=3
+    return axios.get(`/api/v1/book?${query}`)
+}
