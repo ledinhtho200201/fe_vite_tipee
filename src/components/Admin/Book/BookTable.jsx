@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FORMAT_DATE_DISPLAY } from "../../../utils/constant";
 import { callFetchListBook } from "../../../services/api";
 import InputSearch from "./InputSearch";
+import BookViewDetail from "./BookViewDetail";
 
 
 const BookTable = () => {
@@ -15,7 +16,8 @@ const BookTable = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [filter, setFilter] = useState("");
     const [sortQuery, setSortQuery] = useState("sort=-updatedAt");
-
+    const [dataViewDetail, setDataViewDetail] = useState(null);
+    const [openViewDetail, setOpenViewDetail] = useState(true);
 
     useEffect(() => {
         fetchBook();
@@ -46,15 +48,15 @@ const BookTable = () => {
         {
             title: 'Id',
             dataIndex: '_id',
-            // render: (text, record, index) => {
-            //     return (
-            //         <a href='#' onClick={() => {
-            //             console.log(record)
-            //             setDataViewDetail(record);
-            //             setOpenViewDetail(true);
-            //         }}>{record._id}</a>
-            //     )
-            // },
+            render: (text, record, index) => {
+                return (
+                    <a href='#' onClick={() => {
+                        console.log(record)
+                        setDataViewDetail(record);
+                        setOpenViewDetail(true);
+                    }}>{record._id}</a>
+                )
+            },
             sorter: true
         },
         {
@@ -198,6 +200,12 @@ const BookTable = () => {
                     />
                 </Col>
             </Row>
+            <BookViewDetail
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
+                dataViewDetail={dataViewDetail}
+                setDataViewDetail={setDataViewDetail}
+            />
         </>
     )
 }
