@@ -6,6 +6,7 @@ import { FORMAT_DATE_DISPLAY } from "../../../utils/constant";
 import { callFetchListBook } from "../../../services/api";
 import InputSearch from "./InputSearch";
 import BookViewDetail from "./BookViewDetail";
+import BookModalCreate from "./BookModalCreate";
 
 
 const BookTable = () => {
@@ -18,6 +19,7 @@ const BookTable = () => {
     const [sortQuery, setSortQuery] = useState("sort=-updatedAt");
     const [dataViewDetail, setDataViewDetail] = useState(null);
     const [openViewDetail, setOpenViewDetail] = useState(true);
+    const [openModalCreate, setOpenModalCreate] = useState(false);
 
     useEffect(() => {
         fetchBook();
@@ -205,6 +207,10 @@ const BookTable = () => {
                 setOpenViewDetail={setOpenViewDetail}
                 dataViewDetail={dataViewDetail}
                 setDataViewDetail={setDataViewDetail}
+            />
+            <BookModalCreate
+                openModalCreate={openModalCreate}
+                setOpenModalCreate={setOpenModalCreate}
             />
         </>
     )
