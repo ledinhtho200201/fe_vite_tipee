@@ -7,6 +7,7 @@ import { callFetchListBook } from "../../../services/api";
 import InputSearch from "./InputSearch";
 import BookViewDetail from "./BookViewDetail";
 import BookModalCreate from "./BookModalCreate";
+import BookModalUpdate from "./BookModalUpdate";
 
 
 const BookTable = () => {
@@ -20,6 +21,8 @@ const BookTable = () => {
     const [dataViewDetail, setDataViewDetail] = useState(null);
     const [openViewDetail, setOpenViewDetail] = useState(false);
     const [openModalCreate, setOpenModalCreate] = useState(false);
+    const [openModalUpdate, setOpenModalUpdate] = useState(false);
+    const [dataUpdate, setDataUpdate] = useState(false);
 
     useEffect(() => {
         fetchBook();
@@ -110,7 +113,8 @@ const BookTable = () => {
                         <EditTwoTone
                             twoToneColor="#f57800" style={{ cursor: "pointer" }}
                             onClick={() => {
-
+                                setOpenModalUpdate(true);
+                                setDataUpdate(record);
                             }}
                         />
                     </>
@@ -211,6 +215,13 @@ const BookTable = () => {
             <BookModalCreate
                 openModalCreate={openModalCreate}
                 setOpenModalCreate={setOpenModalCreate}
+                fetchBook={fetchBook}
+            />
+            <BookModalUpdate
+                openModalUpdate={openModalUpdate}
+                setOpenModalUpdate={setOpenModalUpdate}
+                dataUpdate={dataUpdate}
+                setDataUpdate={setDataUpdate}
                 fetchBook={fetchBook}
             />
         </>
