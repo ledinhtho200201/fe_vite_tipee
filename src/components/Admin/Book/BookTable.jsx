@@ -1,9 +1,9 @@
 import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Col, Popconfirm, Row, Table } from "antd";
+import { Button, Col, Popconfirm, Row, Table, message, notification } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { FORMAT_DATE_DISPLAY } from "../../../utils/constant";
-import { callFetchListBook } from "../../../services/api";
+import { callDeleteBook, callFetchListBook } from "../../../services/api";
 import InputSearch from "./InputSearch";
 import BookViewDetail from "./BookViewDetail";
 import BookModalCreate from "./BookModalCreate";
@@ -47,6 +47,19 @@ const BookTable = () => {
 
     const handleSearch = (query) => {
         setFilter(query)
+    }
+
+    const handleDeleteBook = async (id) => {
+        const res = await callDeleteBook(id);
+        if (res && res.data) {
+            message.success('Xoá book thành công!')
+            fetchBook()
+        } else {
+            notification.error({
+                message: 'Có lỗi xảy ra',
+                description: res.message
+            });
+        }
     }
 
     const columns = [
@@ -106,9 +119,18 @@ const BookTable = () => {
             render: (text, record, index) => {
                 return (
                     <>
-                        <span style={{ cursor: "pointer", margin: "0 20px" }}>
-                            <DeleteTwoTone twoToneColor="#ff4d4f" />
-                        </span>
+                        <Popconfirm
+                            placement="leftTop"
+                            title={"Xác nhận xóa book"}
+                            description={"Bạn có chắc chắn muốn xóa book này ?"}
+                            onConfirm={() => handleDeleteBook(record._id)}
+                            okText="Xác nhận"
+                            cancelText="Hủy"
+                        >
+                            <span style={{ cursor: "pointer", margin: "0 20px" }}>
+                                <DeleteTwoTone twoToneColor="#ff4d4f" />
+                            </span>
+                        </Popconfirm>
 
                         <EditTwoTone
                             twoToneColor="#f57800" style={{ cursor: "pointer" }}
