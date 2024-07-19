@@ -8,6 +8,7 @@ import InputSearch from "./InputSearch";
 import BookViewDetail from "./BookViewDetail";
 import BookModalCreate from "./BookModalCreate";
 import BookModalUpdate from "./BookModalUpdate";
+import * as XLSX from 'xlsx';
 
 
 const BookTable = () => {
@@ -175,12 +176,6 @@ const BookTable = () => {
                     >Export</Button>
 
                     <Button
-                        icon={<CloudUploadOutlined />}
-                        type="primary"
-                        onClick={() => setOpenModalImport(true)}
-                    >Import</Button>
-
-                    <Button
                         icon={<PlusOutlined />}
                         type="primary"
                         onClick={() => { setOpenModalCreate(true) }}
@@ -198,6 +193,17 @@ const BookTable = () => {
         )
     }
 
+    const handleExportData = () => {
+        let filteredArray = listBook.map((item) => {
+            console.log('item', item.hasOwnProperty('slider'))
+            const { thumbnail, slider, ...rest } = item;
+            return rest;
+        });
+        const worksheet = XLSX.utils.json_to_sheet(filteredArray);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+        XLSX.writeFile(workbook, "ExportBook.csv");
+    };
 
     return (
         <>
