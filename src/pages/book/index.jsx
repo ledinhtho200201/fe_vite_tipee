@@ -22,10 +22,10 @@ const BookPage = () => {
             //process data
             raw.items = getImages(raw);
 
-            setTimeout(() => {
-                setDataBook(raw);
-            }, 3000)
-
+            setDataBook(raw);
+            // setTimeout(() => {
+            //     setDataBook(raw);
+            // }, 3000)
         }
     }
 
