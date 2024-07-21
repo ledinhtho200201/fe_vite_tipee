@@ -64,7 +64,9 @@ const Header = () => {
                         }}>☰</div>
                         <div className='page-header__logo'>
                             <span className='logo'>
-                                <FaBookSkull className='rotate icon-react' />PilBuckez
+                                <span onClick={() => navigate('/')}>
+                                    <FaBookSkull className='rotate icon-react' />PilBuckez
+                                </span>
                                 <VscSearchFuzzy className='icon-search' />
                             </span>
                             <input
