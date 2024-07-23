@@ -23,6 +23,7 @@ import LayoutAdmin from './components/Admin/LayoutAdmin.jsx';
 import './styles/reset.scss';
 import ManageUserPage from './pages/admin/user/index.jsx';
 import ManageBookPage from './pages/admin/book/index.jsx';
+import './styles/global.scss';
 
 const Layout = () => {
   return (
