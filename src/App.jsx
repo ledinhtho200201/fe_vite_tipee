@@ -84,7 +84,7 @@ export default function App() {
           element: <BookPage />,
         },
         {
-          path: "book/order",
+          path: "order",
           element: <ViewOrder />,
         }
       ],
