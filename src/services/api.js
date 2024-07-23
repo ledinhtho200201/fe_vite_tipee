@@ -85,3 +85,7 @@ export const callPlaceOrder = (data) => {
         ...data
     })
 }
+
+export const callOrderHistory = () => {
+    return axios.get('/api/v1/history');
+}

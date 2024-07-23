@@ -37,6 +37,10 @@ const Header = () => {
             key: 'account',
         },
         {
+            label: <Link to="/history">Lịch sử mua hàng</Link>,
+            key: 'history',
+        },
+        {
             label: <label style={{ cursor: 'pointer' }}
                 onClick={() => handleLogout()}
             >Đăng xuất</label>,

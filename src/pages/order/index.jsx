@@ -4,9 +4,11 @@ import { Button, Result, Steps } from "antd";
 import Payment from "../../components/Order/Payment";
 import './order.scss';
 import { SmileOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const OrderPage = (props) => {
     const [currentStep, setCurrentStep] = useState(0);
+    const navigate = useNavigate();
 
     return (
         <>
@@ -40,7 +42,9 @@ const OrderPage = (props) => {
                         <Result
                             icon={<SmileOutlined />}
                             title="Đơn hàng đã được đặt thành công!"
-                            extra={<Button type="primary">Xem lịch sử</Button>}
+                            extra={<Button type="primary"
+                                onClick={() => navigate('/history')}
+                            >Xem lịch sử</Button>}
                         />
                     }
                 </div>

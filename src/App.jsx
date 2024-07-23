@@ -25,6 +25,7 @@ import ManageUserPage from './pages/admin/user/index.jsx';
 import ManageBookPage from './pages/admin/book/index.jsx';
 import './styles/global.scss';
 import OrderPage from './pages/order/index.jsx';
+import HistoryPage from './pages/history/index.jsx';
 
 const Layout = () => {
   return (
@@ -86,6 +87,10 @@ export default function App() {
         {
           path: "order",
           element: <OrderPage />,
+        },
+        {
+          path: "history",
+          element: <HistoryPage />,
         }
       ],
     },
