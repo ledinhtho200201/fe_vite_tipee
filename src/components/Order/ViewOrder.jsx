@@ -1,5 +1,4 @@
 import { Col, Divider, InputNumber, Row } from 'antd';
-import './order.scss';
 import { DeleteTwoTone } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -82,7 +81,7 @@ const ViewOrder = (props) => {
                                 </span>
                             </div>
                             <Divider style={{ margin: "10px 0" }} />
-                            <button>Mua Hàng ({carts?.length ?? 0})</button>
+                            <button onClick={() => props.setCurrentStep(1)}>Mua Hàng ({carts?.length ?? 0})</button>
                         </div>
                     </Col>
                 </Row>
