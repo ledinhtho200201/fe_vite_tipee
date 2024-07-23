@@ -24,6 +24,7 @@ import './styles/reset.scss';
 import ManageUserPage from './pages/admin/user/index.jsx';
 import ManageBookPage from './pages/admin/book/index.jsx';
 import './styles/global.scss';
+import ViewOrder from './components/Order/ViewOrder.jsx';
 
 const Layout = () => {
   return (
@@ -82,6 +83,10 @@ export default function App() {
           path: "book/:slug",
           element: <BookPage />,
         },
+        {
+          path: "book/order",
+          element: <ViewOrder />,
+        }
       ],
     },
     {
