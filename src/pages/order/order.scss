@@ -1,4 +1,6 @@
 .order-container {
+    min-height: calc(100vh - 145px);
+
     .order-book {
         display      : flex;
         gap          : 30px;
@@ -81,5 +83,12 @@
         padding      : 15px;
         border-radius: 5px;
         margin-bottom: 10px;
+    }
+
+    .order-book-empty {
+        background   : white;
+        padding      : 20px;
+        border-radius: 5px;
+        min-height   : 400px;
     }
 }

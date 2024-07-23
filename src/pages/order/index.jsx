@@ -1,8 +1,9 @@
 import { useState } from "react";
 import ViewOrder from "../../components/Order/ViewOrder";
-import { Steps } from "antd";
+import { Button, Result, Steps } from "antd";
 import Payment from "../../components/Order/Payment";
 import './order.scss';
+import { SmileOutlined } from "@ant-design/icons";
 
 const OrderPage = (props) => {
     const [currentStep, setCurrentStep] = useState(0);
@@ -15,6 +16,7 @@ const OrderPage = (props) => {
                         <Steps
                             size="small"
                             current={currentStep}
+                            status={"finish"}
                             items={[
                                 {
                                     title: 'Đơn hàng',
@@ -33,6 +35,13 @@ const OrderPage = (props) => {
                     }
                     {currentStep === 1 &&
                         <Payment setCurrentStep={setCurrentStep} />
+                    }
+                    {currentStep === 2 &&
+                        <Result
+                            icon={<SmileOutlined />}
+                            title="Đơn hàng đã được đặt thành công!"
+                            extra={<Button type="primary">Xem lịch sử</Button>}
+                        />
                     }
                 </div>
             </div>
