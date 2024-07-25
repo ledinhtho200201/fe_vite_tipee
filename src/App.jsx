@@ -87,11 +87,18 @@ export default function App() {
         },
         {
           path: "order",
-          element: <OrderPage />,
+          element:
+            <ProtectedRoute>
+              <OrderPage />
+            </ProtectedRoute>
+
         },
         {
           path: "history",
-          element: <HistoryPage />,
+          element:
+            <ProtectedRoute>
+              <HistoryPage />
+            </ProtectedRoute>
         }
       ],
     },
@@ -115,7 +122,11 @@ export default function App() {
         },
         {
           path: "book",
-          element: <ManageBookPage />,
+
+          element:
+            < ProtectedRoute >
+              <ManageBookPage />,
+            </ProtectedRoute >
         },
         {
           path: "order",
