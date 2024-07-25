@@ -17,6 +17,7 @@ import './layout.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { callLogout } from '../../services/api';
 import { doLogoutAction } from '../../redux/account/accountSlice';
+import ManageAccount from '../Account/ManageAccount';
 
 const { Content, Footer, Sider } = Layout;
 
@@ -62,6 +63,7 @@ const LayoutAdmin = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`;
+    const [showManageAccount, setShowManageAccount] = useState(false);
 
     const handleLogout = async () => {
         const res = await callLogout();
@@ -74,7 +76,10 @@ const LayoutAdmin = () => {
 
     const itemsDropdown = [
         {
-            label: <label style={{ cursor: 'pointer' }}>Quản lý tài khoản</label>,
+            label: <label
+                style={{ cursor: 'pointer' }}
+                onClick={() => setShowManageAccount(true)}
+            >Quản lý tài khoản</label>,
             key: 'account',
         },
         {
@@ -91,49 +96,55 @@ const LayoutAdmin = () => {
     ];
 
     return (
-        <Layout
-            style={{ minHeight: '100vh' }}
-            className="layout-admin"
-        >
-            <Sider
-                theme='light'
-                collapsible
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}>
-                <div style={{ height: 32, margin: 16, textAlign: 'center' }}>
-                    Admin
-                </div>
-                <Menu
-                    defaultSelectedKeys={[activeMenu]}
-                    mode="inline"
-                    items={items}
-                    onClick={(e) => setActiveMenu(e.key)}
-                />
-            </Sider>
-            <Layout>
-                <div className='admin-header'>
-                    <span>
-                        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                            className: 'trigger',
-                            onClick: () => setCollapsed(!collapsed),
-                        })}
-                    </span>
-                    <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
-                        <Space>
-                            <Avatar src={urlAvatar} />
-                            {user?.fullName}
-                            <DownOutlined />
-                        </Space>
-                    </Dropdown>
-                </div>
-                <Content style={{ padding: '15px' }}>
-                    <Outlet />
-                </Content>
-                <Footer style={{ padding: 0, textAlign: 'center', }}>
-                    &copy; {new Date().getFullYear()}. Made with <HeartTwoTone /> - Read in your own way.
-                </Footer>
+        <>
+            <Layout
+                style={{ minHeight: '100vh' }}
+                className="layout-admin"
+            >
+                <Sider
+                    theme='light'
+                    collapsible
+                    collapsed={collapsed}
+                    onCollapse={(value) => setCollapsed(value)}>
+                    <div style={{ height: 32, margin: 16, textAlign: 'center' }}>
+                        Admin
+                    </div>
+                    <Menu
+                        defaultSelectedKeys={[activeMenu]}
+                        mode="inline"
+                        items={items}
+                        onClick={(e) => setActiveMenu(e.key)}
+                    />
+                </Sider>
+                <Layout>
+                    <div className='admin-header'>
+                        <span>
+                            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                                className: 'trigger',
+                                onClick: () => setCollapsed(!collapsed),
+                            })}
+                        </span>
+                        <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
+                            <Space>
+                                <Avatar src={urlAvatar} />
+                                {user?.fullName}
+                                <DownOutlined />
+                            </Space>
+                        </Dropdown>
+                    </div>
+                    <Content style={{ padding: '15px' }}>
+                        <Outlet />
+                    </Content>
+                    <Footer style={{ padding: 0, textAlign: 'center', }}>
+                        &copy; {new Date().getFullYear()}. Made with <HeartTwoTone /> - Read in your own way.
+                    </Footer>
+                </Layout>
             </Layout>
-        </Layout>
+            <ManageAccount
+                isModalOpen={showManageAccount}
+                setIsModalOpen={setShowManageAccount}
+            />
+        </>
     );
 };
 
