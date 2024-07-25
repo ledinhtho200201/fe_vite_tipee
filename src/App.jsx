@@ -26,6 +26,7 @@ import ManageBookPage from './pages/admin/book/index.jsx';
 import './styles/global.scss';
 import OrderPage from './pages/order/index.jsx';
 import HistoryPage from './pages/history/index.jsx';
+import AdminOrderPage from './pages/admin/order/index.jsx';
 
 const Layout = () => {
   return (
@@ -115,6 +116,13 @@ export default function App() {
         {
           path: "book",
           element: <ManageBookPage />,
+        },
+        {
+          path: "order",
+          element:
+            <ProtectedRoute>
+              <AdminOrderPage />,
+            </ProtectedRoute>
         },
       ],
     },
