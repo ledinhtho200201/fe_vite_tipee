@@ -1,9 +1,9 @@
-import { FilterTwoTone, ReloadOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Col, Divider, Form, InputNumber, Pagination, Rate, Row, Spin, Tabs } from "antd";
+import { FilterTwoTone, HomeOutlined, ReloadOutlined } from "@ant-design/icons";
+import { Breadcrumb, Button, Checkbox, Col, Divider, Form, InputNumber, Pagination, Rate, Row, Spin, Tabs } from "antd";
 import './home.scss';
 import { useEffect, useState } from "react";
 import { callFetchCategory, callFetchListBook } from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 const Home = () => {
     const [form] = Form.useForm();
@@ -19,6 +19,7 @@ const Home = () => {
     const [sortQuery, setSortQuery] = useState("sort=-sold");
 
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useOutletContext();
 
     useEffect(() => {
         const initCategory = async () => {
@@ -35,7 +36,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchBook();
-    }, [current, pageSize, filter, sortQuery]);
+    }, [current, pageSize, filter, sortQuery, searchTerm]);
 
     const fetchBook = async () => {
         setIsLoading(true)
@@ -45,6 +46,9 @@ const Home = () => {
         }
         if (sortQuery) {
             query += `&${sortQuery}`;
+        }
+        if (searchTerm) {
+            query += `&mainText=/${searchTerm}/i`;
         }
 
         const res = await callFetchListBook(query);
@@ -169,6 +173,22 @@ const Home = () => {
     return (
         <>
             <div className="homepage-container" style={{ maxWidth: 1850, margin: '0 auto' }}>
+                <Breadcrumb
+                    style={{ margin: '5px 0' }}
+                    items={[
+                        {
+                            // href: '#',
+                            title: <HomeOutlined />,
+                        },
+                        {
+                            title: (
+                                <Link to={'/'}>
+                                    <span>Trang Chủ</span>
+                                </Link>
+                            ),
+                        }
+                    ]}
+                />
                 <Row gutter={[20, 20]}>
                     <Col md={4} sm={0} xs={0}>
                         <div style={{ padding: "20px", background: '#fff', borderRadius: 5 }}>

@@ -29,10 +29,12 @@ import HistoryPage from './pages/history/index.jsx';
 import AdminOrderPage from './pages/admin/order/index.jsx';
 
 const Layout = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <div className='layout-app'>
-      <Header />
-      <Outlet />
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Outlet context={[searchTerm, setSearchTerm]} />
       <Footer />
     </div>
   )
