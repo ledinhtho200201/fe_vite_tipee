@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { FaReact } from 'react-icons/fa'
 import { FiShoppingCart } from 'react-icons/fi';
 import { VscSearchFuzzy } from 'react-icons/vsc';
-import { Divider, Badge, Drawer, message, Avatar, Popover } from 'antd';
+import { Divider, Badge, Drawer, message, Avatar, Popover, Empty } from 'antd';
 import './header.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { DownOutlined } from '@ant-design/icons';
@@ -80,7 +79,16 @@ const Header = () => {
                     })}
                 </div>
                 <div className='pop-cart-footer'>
-                    <button onClick={() => navigate('/order')}>Xem giỏ hàng</button>
+                    {carts.length > 0 ?
+                        <div className='pop-cart-footer'>
+                            <button onClick={() => navigate('/order')}>Xem giỏ hàng</button>
+                        </div>
+                        :
+                        <Empty
+                            description="Không có sản phẩm trong giỏ hàng"
+                        />
+                    }
+
                 </div>
             </div>
         )
